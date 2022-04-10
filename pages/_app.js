@@ -1,11 +1,14 @@
 import '../styles/globals.css'
-import { HeadComp } from '../sharedComponents';
+import { HtmlHead, ThemeProvider } from '../sharedComponents';
 
 function MyApp({ Component, pageProps }) {
+  
   return (
-    <div>
-      <HeadComp />
-      <Component {...pageProps} />  
+    <div className="bg-emerald-100 min-h-screen">
+      <ThemeProvider>
+        <HtmlHead />
+        <Component {...pageProps} />  
+      </ThemeProvider>
     </div>
   )
 }

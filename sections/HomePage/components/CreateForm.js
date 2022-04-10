@@ -1,5 +1,5 @@
 
-const CookieForm = ({ handleChange, handleSubmit }) => (
+const CreateForm = ({ handleChange, handleSubmit }) => (
     <div className="bg-emerald-300 rounded p-3">
       <h2 className="text-center font-medium p-2 text-lg">Create Cookie Stand</h2>
       
@@ -9,11 +9,11 @@ const CookieForm = ({ handleChange, handleSubmit }) => (
             className="w-full"
             name="location" 
             type="text" 
-            placeholder='Barcelona'
+            // placeholder='Barcelona'
             />
           </label>
           <div className="flex mt-12 text-center">
-            <label><span className="text-sm ">Minimum Customers per Hour</span>
+            <label className="bg-emerald-200 rounded p-2 m-2"><span className="text-sm ">Minimum Customers per Hour</span>
               <input
                 className="w-56"
                 name="minCustomer" 
@@ -22,7 +22,7 @@ const CookieForm = ({ handleChange, handleSubmit }) => (
                 placeholder='0' 
                 />
             </label>
-            <label><span className="text-sm text-center">Maximum Customers per Hour</span>
+            <label className="bg-emerald-200 rounded p-2 m-2"><span className="text-sm text-center">Maximum Customers per Hour</span>
               <input
                 className="w-56"
                 name="maxCustomer" 
@@ -31,7 +31,7 @@ const CookieForm = ({ handleChange, handleSubmit }) => (
                 placeholder='0' 
                 />
             </label>
-            <label><span className="text-sm text-center ">Average Cookies per Sale</span>
+            <label className="bg-emerald-200 rounded p-2 m-2"><span className="text-sm text-center ">Average Cookies per Sale</span>
               <input
                 className="w-56" 
                 name="avgSales" 
@@ -42,7 +42,7 @@ const CookieForm = ({ handleChange, handleSubmit }) => (
                 />
             </label>
             <button 
-              className="bg-emerald-500 p-4 w-4/12"
+              className="bg-emerald-500 p-4 w-4/12 rounded m-2"
               type="submit" >
                 Create
             </button>
@@ -51,4 +51,4 @@ const CookieForm = ({ handleChange, handleSubmit }) => (
     </div>
   );
 
-export default CookieForm;
+export default CreateForm;
