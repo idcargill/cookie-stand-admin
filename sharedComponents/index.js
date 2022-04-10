@@ -1,9 +1,16 @@
 import Header from './components/Header';
 import Footer from './components/Footer';
-import HeadComp from './components/HeadComp';
+import HtmlHead from './components/HtmlHead';
+import ThemeProvider from './components/ThemeProvider';
+import { useUserContext, useUpdateUserContext, useSalesContext, useUpdateSalesContext } from './components/ThemeProvider';
 
 export {
-  HeadComp,
+  HtmlHead,
   Header,
+  ThemeProvider,
+  useUserContext,
+  useUpdateUserContext,
+  useSalesContext,
+  useUpdateSalesContext,
   Footer,
 }
