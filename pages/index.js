@@ -1,12 +1,15 @@
-import { useState } from 'react';
-import { CookieStandAdmin as MainContent } from '../sections/HomePage';
+import { useState, useEffect } from 'react';
+import getMockData from '../utils/getMockData';
+import { data } from '../utils/data/fakeData';
+import { useAuth, useResource } from '../sharedComponents/auth';
+
+import  Main from '../sections/Main/Main';
 import { 
-  Header, 
+  Header,
   Footer,
   useUserContext,
   useUpdateUserContext } from '../sharedComponents';
 
-import { data } from '../data/fakeData';
 
 export async function getStaticProps() {
   const fakeData = data;
@@ -18,30 +21,39 @@ export async function getStaticProps() {
   }
 }
 
-export default function CookieStandAdmin(pageProps) {
-  const [ isData, setIsData ] = useState(false);
-  const [ storeCount, setStoreCount ] = useState(0)
 
-  const isLoggedIn = useUserContext();
-  const toggleLoggedIn = useUpdateUserContext();
+
+export default function Home(pageProps) {
+  const { user, tokens, logout } = useAuth();
+  const { resource }  = useResource();
+
+  const [ storeCount, setStoreCount ] = useState(0)
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 
   const updateStoreCount = (num) => {
     setStoreCount(num);
-  }
+  };
 
-  const toggleData = () => {
-    setIsData(!isData);
-  }
+  useEffect(() => {
+    if (user && tokens.access) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [user, tokens])
+
+  
 
   return (
     <div className="bg-emerald-50 min-h-screen">
       <Header 
-        toggleLogin={toggleLoggedIn}
+        user={user}
+        logout={logout}
         isLoggedIn={isLoggedIn}
       />
-      <MainContent 
-        mockData={pageProps?.fakeData}
+      <Main
         isLoggedIn={isLoggedIn}
+        data={resource}
         updateStoreCount={updateStoreCount}
       />
       <Footer 

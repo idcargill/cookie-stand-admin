@@ -1,21 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-
-const LogInButton = ({ isLoggedIn, toggleLogin }) => (
-  <button 
-    className="self-center rounded bg-emerald-50 mr-12 p-2 active:bg-pink-300"
-    onClick={toggleLogin}
-    >
-    {isLoggedIn ? 'Log Out' : 'Log In'}
-  </button>
-);
-
 const OverviewButton = () => {
   const router = useRouter();
-
   return (
-    <div className="self-center w-{200} rounded bg-emerald-50 mr-12 active:bg-pink-300">
+    <div className="self-center w-{200} rounded bg-emerald-50 active:bg-pink-300">
       <Link 
         href={router.asPath == '/overview' ? '/' : '/overview'}
         >
@@ -25,7 +14,16 @@ const OverviewButton = () => {
   )
 }
 
-const Header = ({ isLoggedIn, toggleLogin }) => {
+const Header = ({ isLoggedIn, user, logout }) => {
+
+  const SignOut = () => (
+    <button 
+      className="self-center rounded bg-emerald-50 p-1 active:bg-pink-300"
+      onClick={logout}
+      >
+      {isLoggedIn ? 'Sign Out' : 'Sign In'}
+    </button>
+  );
 
   return (
     <div className="flex bg-emerald-500">
@@ -33,11 +31,14 @@ const Header = ({ isLoggedIn, toggleLogin }) => {
         Cookie Stand Admin
       </h1>
 
-      <OverviewButton />
-        {/* <LogInButton 
-        toggleLogin={toggleLogin}
-        isLoggedIn={isLoggedIn}
-      />  */}
+    <div className="flex basis-1/6 justify-between mr-12 text-sm">
+        {isLoggedIn 
+          ? <p className="bg-emerald-50 rounded p-1 self-center">{user?.username}</p>
+          : null
+        }
+        {isLoggedIn ? <SignOut/> : null } 
+        <OverviewButton />
+      </div>
     </div>
   )
 }

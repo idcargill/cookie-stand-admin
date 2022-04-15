@@ -1,14 +1,14 @@
-import { useSalesContext } from '../../sharedComponents'
+import { useResource } from '../../sharedComponents/auth';
 
 const Footer = () => {
-  const salesRecord = useSalesContext();
-  const s = salesRecord > 1 ? 's' : '';
+  const { resources } = useResource();
+  const s = resources?.length > 1 ? 's' : '';
 
   return (
     <footer className="bg-emerald-500 p-4 text-sm text-left">
       <p>
-        {salesRecord
-          ? `${salesRecord.length} Location${s} World Wide`
+        {resources
+          ? `${resources.length} Location${s} World Wide`
           :  'No Locations'
         }</p>
     </footer>
@@ -17,4 +17,3 @@ const Footer = () => {
 
 export default Footer
 
-// fixed bottom-20 w-full
