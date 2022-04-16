@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 module.exports = function getMockData() {
-  const rawData = fs.readFileSync('/Users/ianc/projects/cookie-stand-admin/data/MOCK_DATA.csv', 'utf-8')
+  const rawData = fs.readFileSync('./data/MOCK_DATA.csv', 'utf-8')
   const dataArr = rawData.split('\n');
   
   const data = dataArr.reduce((total, row) => {
