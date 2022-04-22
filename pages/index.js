@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { CookieStandAdmin as MainContent } from '../sections/HomePage';
-import getMockData from '../utils/getMockData';
 import { 
   Header, 
   Footer,
@@ -10,12 +9,10 @@ import {
 import { data } from '../data/fakeData';
 
 export async function getStaticProps() {
-  const mockData = getMockData();
   const fakeData = data;
 
   return {
     props: {
-      mockData,
       fakeData,
     }
   }
