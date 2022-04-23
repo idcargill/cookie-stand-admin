@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
-import { CreateForm, ReportTable } from '..'
+import { useState } from 'react';
+import { CreateForm, ReportTable } from '.'
 import { objectEqual } from '../../../utils/objectEqual';
 import { useUpdateSalesContext} from '../../../sharedComponents'
-import { locationMapper, locationSales, locations } from '../../../data/fakeData';
+import {locationSales } from '../../../utils/data/fakeData';
+import useResource from '../../../sharedComponents/auth/useResource';
+import { useAuth } from '../../../sharedComponents/auth/auth';
 
-const CookieStandAdmin = ({ mockData, isLoggedIn }) => {
-  const [ location, setLocation ] = useState('Barcelona');
+const CookieStandAdmin = ({ data, isLoggedIn }) => {
+  const [ location, setLocation ] = useState('');
   const [ minCustomer, setMinCustomer] = useState(0);
   const [ maxCustomer, setMaxCustomer] = useState(0);
   const [ avgSales, setAvgSales ] = useState(0);
@@ -14,6 +16,10 @@ const CookieStandAdmin = ({ mockData, isLoggedIn }) => {
   const updateReports = useUpdateSalesContext();
   const staticSales = [48, 42, 30, 24, 42, 24, 36, 42, 42, 48, 36, 42, 24, 36];
   const [ hourlySales, setHourlySales ] = useState(staticSales)
+  
+  const { createResource, deleteResource, updateResource, error, loading, resources } = useResource();
+  const { user } = useAuth();
+
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -37,37 +43,49 @@ const CookieStandAdmin = ({ mockData, isLoggedIn }) => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleDelete = async (id) => {
+    deleteResource(id)
+  } 
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     const blankForm = {
-      location: 'Barcelona',
+      location: '',
       minCustomer: 0,
       maxCustomer: 0,
       avgSales: 0,
       hourlySales: hourlySales,
     }
 
-    let updatedForm = {
+    const updatedForm = {
+      name: user?.username,
       location: location,
-      minCustomer: minCustomer,
-      maxCustomer: maxCustomer,
-      avgSales: avgSales,
-      hourlySales: hourlySales,
+      description: '',
+      hourly_sales: hourlySales,
+      minimum_customers_per_hour: minCustomer,
+      maximum_customers_per_hour: maxCustomer,
+      average_cookies_per_sale: avgSales,
     }
 
     const locationCheck = location.toLowerCase();
 
-    if (!objectEqual(updatedForm, blankForm)) {
-      if (locationSales[locationCheck]) {
-        updateReports(updatedForm)
-      } else {
-        updateReports(updatedForm);
+    try {
+      if (!objectEqual(updatedForm, blankForm)) {
+        await createResource(updatedForm)
+
+        if (locationSales[locationCheck]) {
+          updateReports(updatedForm)
+        } else {
+          updateReports(updatedForm);
+        }
+        setShowTable(true);
       }
-      setShowTable(true);
+    } catch(e) {
+      console.warn(e.message);
     }
 
-    setLocation('Barcelona');
+    setLocation('');
     setMinCustomer(0);
     setMaxCustomer(0);
     setAvgSales(0);
@@ -82,9 +100,9 @@ const CookieStandAdmin = ({ mockData, isLoggedIn }) => {
       handleSubmit={handleSubmit}
       />
     <ReportTable 
-      mockData={mockData}
-      isLoggedIn={isLoggedIn}
+      reports={data}
       showTable={showTable}
+      handleDelete={handleDelete}
     />
   </main>
   )

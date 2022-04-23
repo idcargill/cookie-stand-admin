@@ -2,7 +2,16 @@
 
 An app...for cookies.
 
-[Deployed](https://cookie-stand-admin-nxq0rb3dd-idcargill.vercel.app/)
+[APP Deployed](https://cookie-stand-admin-nxq0rb3dd-idcargill.vercel.app/)
 
-Lab 38
-[PR](https://github.com/idcargill/cookie-stand-admin/compare/lab-38?expand=1)
+[AWS-Django-API](http://ec2-3-95-225-231.compute-1.amazonaws.com:8000/api/v1/cookies)
+
+Lab 39
+[PR](https://github.com/idcargill/cookie-stand-admin/pulls)
+
+### Log in
+
+If you have trouble logging in this should give you admin access
+
+- username "admin"
+- password "admin"

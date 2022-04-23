@@ -1,11 +1,11 @@
-import { useUserContext, useSalesContext } from '../../../../sharedComponents'
 import ReportTableFooter from './ReportTableFooter';
-import { hours, data } from '../../../../data/fakeData'
+import { hours } from '../../../../utils/data/fakeData'
+import { TrashCan } from '../../../../sharedComponents/Icons';
+import { useResource } from '../../../../sharedComponents/auth';
 
-const ReportTable = ({ mockData, showTable }) => {
-  
-  const reports = useSalesContext();
-  // const reports = data;
+
+const ReportTable = ({ handleDelete }) => {
+  const { resources }  = useResource();
   const tableHourHeaders = hours;
 
   const TableBuilder = () => (
@@ -26,14 +26,18 @@ const ReportTable = ({ mockData, showTable }) => {
       </thead>
       
       <tbody>
-      {reports.map((report, idx) => (
+      {resources.map((report, idx) => (
         <tr key={idx+report.location} className="odd:bg-emerald-400 even:bg-emerald-300">
           <td 
             className="p-1 pl-2 text-left border border-gray-800"
+            key={report.id}
           >
-            {report.location}
+            <div className="flex justify-between">
+            {report.location} 
+            <TrashCan handleDelete={() =>handleDelete(report.id)}/>
+            </div>
           </td>
-          {report.hourlySales.map((sale, idx) => (
+          {report.hourly_sales.map((sale, idx) => (
             <td 
               key={idx+'_sales'} 
               className="text-center border border-gray-800"
@@ -42,7 +46,7 @@ const ReportTable = ({ mockData, showTable }) => {
             </td>
           ))}
         <td className="text-center border border-gray-800">
-          {report.hourlySales.reduce((accu, sale) => {
+          {report.hourly_sales.reduce((accu, sale) => {
             accu += sale;
             return accu;
             },0)}
@@ -50,15 +54,13 @@ const ReportTable = ({ mockData, showTable }) => {
       </tr>
       ))}
       </tbody>
-
-          <ReportTableFooter data={reports}/>
+          <ReportTableFooter data={resources}/>
     </table>
     </div>
   )
-  
   return (
     <>
-      {showTable
+      {resources?.length > 0
         ? <TableBuilder />
         : <h2 className="text-center text-2xl m-12 font-sans">
             No Cookie Stands Available

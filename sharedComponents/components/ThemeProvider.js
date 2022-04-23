@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import useResource from '../auth/useResource';
 
 const UserContext = React.createContext();
 const UpdateUserContext = React.createContext();
@@ -23,6 +24,7 @@ export function useUpdateSalesContext() {
 }
 
 const ThemeProvider = ({ children }) => {
+  const { resources } = useResource();
   const [ isLoggedIn, setLoggedIn ] = useState(false);
   const [ reports, setReports ] = useState([])
 

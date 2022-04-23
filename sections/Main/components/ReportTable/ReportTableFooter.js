@@ -2,7 +2,7 @@ const ReportTableFooter = ({ data }) =>  {
 
   const getTotalHourlySales = (data) => (
   data.reduce((accu, report) => {
-    report.hourlySales.forEach((hour, i) => {
+    report.hourly_sales.forEach((hour, i) => {
       if (!accu[i]) {
         accu[i] = hour
       }
