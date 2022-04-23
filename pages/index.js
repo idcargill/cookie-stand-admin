@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
-import getMockData from '../utils/getMockData';
 import { data } from '../utils/data/fakeData';
 import { useAuth, useResource } from '../sharedComponents/auth';
 
 import  Main from '../sections/Main/Main';
 import { 
   Header,
-  Footer,
-  useUserContext,
-  useUpdateUserContext } from '../sharedComponents';
+  Footer
+ } from '../sharedComponents';
 
 
 export async function getStaticProps() {
@@ -20,8 +18,6 @@ export async function getStaticProps() {
     }
   }
 }
-
-
 
 export default function Home(pageProps) {
   const { user, tokens, logout } = useAuth();
@@ -41,8 +37,6 @@ export default function Home(pageProps) {
       setIsLoggedIn(false);
     }
   }, [user, tokens])
-
-  
 
   return (
     <div className="bg-emerald-50 min-h-screen">
